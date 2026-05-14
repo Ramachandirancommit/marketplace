@@ -1,112 +1,249 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ThemedText } from "@/components/themed-text";
+import { Ionicons } from "@expo/vector-icons";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+export default function ExploreScreen() {
+  // 🔷 FLAT PRODUCT LIST (NOT grouped)
+  const products = [
+    ...generateProducts("Electronics"),
+    ...generateProducts("Civil"),
+    ...generateProducts("Vehicles"),
+    ...generateProducts("Agriculture"),
+    ...generateProducts("Real Estate"),
+    ...generateProducts("Apps Store"),
+    ...generateProducts("Home Products"),
+    ...generateProducts("Super Market"),
+    ...generateProducts("Clothings"),
+  ];
 
-export default function TabTwoScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
+    <View style={{ flex: 1, backgroundColor: "#f4f6f8" }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* 🔷 HEADER */}
+        <ThemedText style={styles.title}>🔥 Top Picks</ThemedText>
+        <ThemedText style={styles.subtitle}>
+          Discover the best products across all categories
         </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+
+        {/* 🔷 GRID */}
+        <View style={styles.grid}>
+          {products.map((item, index) => (
+            <View key={index} style={styles.card}>
+              {/* IMAGE PLACEHOLDER */}
+              <View style={styles.imageBox}>
+                <Ionicons name="image" size={30} color="#bbb" />
+              </View>
+
+              {/* NAME */}
+              <ThemedText style={styles.productName}>{item.name}</ThemedText>
+
+              {/* CATEGORY */}
+              <ThemedText style={styles.category}>{item.category}</ThemedText>
+
+              {/* PRICE */}
+              <ThemedText style={styles.price}>₹{item.price}</ThemedText>
+
+              {/* RATING */}
+              <ThemedText style={styles.rating}>⭐ {item.rating}</ThemedText>
+
+              {/* ACTIONS */}
+              <View style={styles.actions}>
+                <IconBtn icon="cart" />
+                <IconBtn icon="eye" />
+                <IconBtn icon="call" />
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
+//
+// 🔷 DUMMY DATA GENERATOR
+//
+function generateProducts(category: string) {
+  return [1, 2, 3].map((i) => ({
+    name: `${category} Item ${i}`,
+    category,
+    price: i * 1000,
+    rating: (4 + Math.random()).toFixed(1),
+  }));
+}
+
+//
+// 🔷 ICON BUTTON
+//
+function IconBtn({ icon }: any) {
+  return (
+    <TouchableOpacity style={styles.iconBtn}>
+      <Ionicons name={icon} size={16} color="#fff" />
+    </TouchableOpacity>
+  );
+}
+
+//
+// 🔷 STYLES (MUI-LIKE GRID)
+//
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    padding: 12,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+
+  subtitle: {
+    fontSize: 12,
+    color: "#666",
+    marginBottom: 10,
+  },
+
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+
+  card: {
+    width: "23%", // 🔥 4 per row
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 10,
+    marginBottom: 12,
+    elevation: 3,
+  },
+
+  imageBox: {
+    height: 60,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+
+  productName: {
+    fontSize: 11,
+    fontWeight: "600",
+  },
+
+  category: {
+    fontSize: 9,
+    color: "#888",
+  },
+
+  price: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#2e7d32",
+  },
+
+  rating: {
+    fontSize: 10,
+    marginBottom: 4,
+  },
+
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
+
+  iconBtn: {
+    backgroundColor: "#1976d2",
+    padding: 6,
+    borderRadius: 6,
   },
 });
+
+
+// import { ScrollView, StyleSheet, View } from "react-native";
+
+// import { ThemedText } from "@/components/themed-text";
+// import { ThemedView } from "@/components/themed-view";
+
+// const categories = [
+//   "Electronics",
+//   "Civil",
+//   "Vehicles",
+//   "Agriculture",
+//   "Real Estate",
+//   "Apps Store",
+//   "Home Products",
+//   "Super Market",
+//   "Clothings",
+// ];
+
+// export default function ExploreScreen() {
+//   return (
+//     <View style={{ flex: 1 }}>
+//       <ScrollView contentContainerStyle={{ padding: 16 }}>
+//         {/* 🔷 Title */}
+//         <ThemedView style={styles.section}>
+//           <ThemedText type="title">🔥 Top Picks</ThemedText>
+//           <ThemedText>
+//             Discover the best products from each category.
+//           </ThemedText>
+//         </ThemedView>
+
+//         {/* 🔷 Categories */}
+//         {categories.map((category) => (
+//           <ThemedView key={category} style={styles.section}>
+//             <ThemedText type="subtitle">{category}</ThemedText>
+
+//             {/* Top 3 items */}
+//             <View style={styles.row}>
+//               {[1, 2, 3].map((item) => (
+//                 <View key={item} style={styles.card}>
+//                   <ThemedText style={styles.productTitle}>
+//                     {category} Item {item}
+//                   </ThemedText>
+//                   <ThemedText style={styles.price}>₹{item * 1000}</ThemedText>
+//                 </View>
+//               ))}
+//             </View>
+//           </ThemedView>
+//         ))}
+//       </ScrollView>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   section: {
+//     marginBottom: 20,
+//     gap: 8,
+//   },
+
+//   row: {
+//     flexDirection: "row",
+//     gap: 10,
+//     flexWrap: "wrap",
+//   },
+
+//   card: {
+//     backgroundColor: "#eef6f9",
+//     padding: 12,
+//     borderRadius: 12,
+//     width: 110,
+//     height: 110,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+
+//   productTitle: {
+//     fontSize: 12,
+//     textAlign: "center",
+//   },
+
+//   price: {
+//     fontSize: 12,
+//     marginTop: 4,
+//     color: "#0b3c49",
+//     fontWeight: "bold",
+//   },
+// });
