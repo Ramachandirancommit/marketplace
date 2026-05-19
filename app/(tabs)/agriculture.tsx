@@ -1,3 +1,4 @@
+//agriculture
 import { ThemedText } from "@/components/themed-text";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
