@@ -1,112 +1,392 @@
 import { ThemedText } from "@/components/themed-text";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 
 export default function HomeScreen() {
-  const router = useRouter();
-
-  // 🔷 CATEGORY DATA
-  const categories = [
+  //
+  // 🔥 TRENDING PRODUCTS
+  //
+  const products = [
     {
-      name: "Electronics",
-      sold: 102,
-      income: "₹1.03 Cr",
-      pending: 25,
-      rating: 4.5,
-    },
-    { name: "Civil", sold: 80, income: "₹75 L", pending: 40, rating: 4.2 },
-    { name: "Vehicles", sold: 45, income: "₹2.5 Cr", pending: 10, rating: 4.6 },
-    {
-      name: "Agriculture",
-      sold: 120,
-      income: "₹60 L",
-      pending: 30,
-      rating: 4.3,
-    },
-    { name: "Real Estate", sold: 15, income: "₹5 Cr", pending: 5, rating: 4.8 },
-    {
-      name: "Apps Store",
-      sold: 300,
-      income: "₹20 L",
-      pending: 50,
-      rating: 4.1,
+      name: "Dell XPS Laptop",
+      category: "Laptop",
+      sold: 320,
+      image: "https://picsum.photos/id/0/200/200",
     },
     {
-      name: "Home Products",
+      name: "MacBook Pro",
+      category: "Laptop",
+      sold: 280,
+      image: "https://picsum.photos/id/1/200/200",
+    },
+    {
+      name: "Lenovo Legion",
+      category: "Laptop",
+      sold: 240,
+      image: "https://picsum.photos/id/2/200/200",
+    },
+    {
+      name: "HP Pavilion",
+      category: "Laptop",
+      sold: 190,
+      image: "https://picsum.photos/id/3/200/200",
+    },
+    {
+      name: "ASUS ROG",
+      category: "Laptop",
       sold: 210,
-      income: "₹35 L",
-      pending: 60,
-      rating: 4.4,
+      image: "https://picsum.photos/id/4/200/200",
+    },
+
+    {
+      name: "iPhone 15",
+      category: "Mobile",
+      sold: 520,
+      image: "https://picsum.photos/id/5/200/200",
     },
     {
-      name: "Super Market",
-      sold: 500,
-      income: "₹10 L",
-      pending: 100,
-      rating: 4.0,
+      name: "Samsung S24",
+      category: "Mobile",
+      sold: 470,
+      image: "https://picsum.photos/id/6/200/200",
     },
-    { name: "Clothings", sold: 350, income: "₹18 L", pending: 70, rating: 4.2 },
+    {
+      name: "OnePlus 12",
+      category: "Mobile",
+      sold: 390,
+      image: "https://picsum.photos/id/7/200/200",
+    },
+    {
+      name: "Vivo X100",
+      category: "Mobile",
+      sold: 260,
+      image: "https://picsum.photos/id/8/200/200",
+    },
+    {
+      name: "Redmi Note",
+      category: "Mobile",
+      sold: 430,
+      image: "https://picsum.photos/id/9/200/200",
+    },
+
+    {
+      name: "LG Smart TV",
+      category: "TV",
+      sold: 160,
+      image: "https://picsum.photos/id/10/200/200",
+    },
+    {
+      name: "Sony Bravia",
+      category: "TV",
+      sold: 140,
+      image: "https://picsum.photos/id/11/200/200",
+    },
+    {
+      name: "Samsung OLED",
+      category: "TV",
+      sold: 180,
+      image: "https://picsum.photos/id/12/200/200",
+    },
+
+    {
+      name: "Whirlpool Fridge",
+      category: "Fridge",
+      sold: 120,
+      image: "https://picsum.photos/id/13/200/200",
+    },
+    {
+      name: "LG Refrigerator",
+      category: "Fridge",
+      sold: 110,
+      image: "https://picsum.photos/id/14/200/200",
+    },
+    {
+      name: "Samsung Fridge",
+      category: "Fridge",
+      sold: 150,
+      image: "https://picsum.photos/id/15/200/200",
+    },
+
+    {
+      name: "IFB Washing Machine",
+      category: "Washing",
+      sold: 130,
+      image: "https://picsum.photos/id/16/200/200",
+    },
+    {
+      name: "Bosch Washer",
+      category: "Washing",
+      sold: 90,
+      image: "https://picsum.photos/id/17/200/200",
+    },
+    {
+      name: "LG Washing Machine",
+      category: "Washing",
+      sold: 170,
+      image: "https://picsum.photos/id/18/200/200",
+    },
+
+    {
+      name: "Daikin AC",
+      category: "AC",
+      sold: 140,
+      image: "https://picsum.photos/id/19/200/200",
+    },
+    {
+      name: "Voltas AC",
+      category: "AC",
+      sold: 160,
+      image: "https://picsum.photos/id/20/200/200",
+    },
+    {
+      name: "Blue Star AC",
+      category: "AC",
+      sold: 110,
+      image: "https://picsum.photos/id/21/200/200",
+    },
+
+    {
+      name: "Boat Headset",
+      category: "Accessories",
+      sold: 600,
+      image: "https://picsum.photos/id/22/200/200",
+    },
+    {
+      name: "JBL Speaker",
+      category: "Accessories",
+      sold: 310,
+      image: "https://picsum.photos/id/23/200/200",
+    },
+    {
+      name: "Apple AirPods",
+      category: "Accessories",
+      sold: 280,
+      image: "https://picsum.photos/id/24/200/200",
+    },
+
+    {
+      name: "Gaming Keyboard",
+      category: "Gaming",
+      sold: 220,
+      image: "https://picsum.photos/id/25/200/200",
+    },
+    {
+      name: "Gaming Mouse",
+      category: "Gaming",
+      sold: 260,
+      image: "https://picsum.photos/id/26/200/200",
+    },
+    {
+      name: "PS5 Console",
+      category: "Gaming",
+      sold: 180,
+      image: "https://picsum.photos/id/27/200/200",
+    },
+
+    {
+      name: "Office Chair",
+      category: "Furniture",
+      sold: 95,
+      image: "https://picsum.photos/id/28/200/200",
+    },
+    {
+      name: "Wooden Table",
+      category: "Furniture",
+      sold: 75,
+      image: "https://picsum.photos/id/29/200/200",
+    },
+    {
+      name: "Sofa Set",
+      category: "Furniture",
+      sold: 55,
+      image: "https://picsum.photos/id/30/200/200",
+    },
+
+    {
+      name: "Nike Shoes",
+      category: "Fashion",
+      sold: 330,
+      image: "https://picsum.photos/id/31/200/200",
+    },
+    {
+      name: "Adidas Shoes",
+      category: "Fashion",
+      sold: 290,
+      image: "https://picsum.photos/id/32/200/200",
+    },
+    {
+      name: "Puma Shoes",
+      category: "Fashion",
+      sold: 210,
+      image: "https://picsum.photos/id/33/200/200",
+    },
+
+    {
+      name: "Men T-Shirt",
+      category: "Clothing",
+      sold: 430,
+      image: "https://picsum.photos/id/34/200/200",
+    },
+    {
+      name: "Women Saree",
+      category: "Clothing",
+      sold: 250,
+      image: "https://picsum.photos/id/35/200/200",
+    },
+    {
+      name: "Kids Wear",
+      category: "Clothing",
+      sold: 190,
+      image: "https://picsum.photos/id/36/200/200",
+    },
+
+    {
+      name: "Mixer Grinder",
+      category: "Kitchen",
+      sold: 145,
+      image: "https://picsum.photos/id/37/200/200",
+    },
+    {
+      name: "Rice Cooker",
+      category: "Kitchen",
+      sold: 115,
+      image: "https://picsum.photos/id/38/200/200",
+    },
+    {
+      name: "Microwave Oven",
+      category: "Kitchen",
+      sold: 135,
+      image: "https://picsum.photos/id/39/200/200",
+    },
+
+    {
+      name: "Cycle",
+      category: "Sports",
+      sold: 80,
+      image: "https://picsum.photos/id/40/200/200",
+    },
+    {
+      name: "Treadmill",
+      category: "Sports",
+      sold: 40,
+      image: "https://picsum.photos/id/41/200/200",
+    },
+    {
+      name: "Dumbbells",
+      category: "Sports",
+      sold: 120,
+      image: "https://picsum.photos/id/42/200/200",
+    },
+
+    {
+      name: "Tablet",
+      category: "Electronics",
+      sold: 140,
+      image: "https://picsum.photos/id/43/200/200",
+    },
+    {
+      name: "Smart Watch",
+      category: "Electronics",
+      sold: 340,
+      image: "https://picsum.photos/id/44/200/200",
+    },
+    {
+      name: "Power Bank",
+      category: "Electronics",
+      sold: 410,
+      image: "https://picsum.photos/id/45/200/200",
+    },
+
+    {
+      name: "Printer",
+      category: "Office",
+      sold: 95,
+      image: "https://picsum.photos/id/46/200/200",
+    },
+    {
+      name: "Scanner",
+      category: "Office",
+      sold: 50,
+      image: "https://picsum.photos/id/47/200/200",
+    },
+    {
+      name: "Projector",
+      category: "Office",
+      sold: 65,
+      image: "https://picsum.photos/id/48/200/200",
+    },
+
+    {
+      name: "Camera",
+      category: "Photography",
+      sold: 70,
+      image: "https://picsum.photos/id/49/200/200",
+    },
+    {
+      name: "Drone",
+      category: "Photography",
+      sold: 35,
+      image: "https://picsum.photos/id/50/200/200",
+    },
+    {
+      name: "Tripod",
+      category: "Photography",
+      sold: 85,
+      image: "https://picsum.photos/id/51/200/200",
+    },
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f4f6f8" }}>
-      {/* 🔷 TOP BAR */}
-      <View style={styles.topBar}>
-        <TopIcon name="briefcase" onPress={() => router.push("/career")} />
-        <TopIcon name="person" onPress={() => router.push("/profile")} />
-        <TopIcon name="log-in" onPress={() => router.push("/login")} />
-      </View>
+    <View style={styles.mainContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      >
+        {/* ========================= */}
+        {/* PAGE HEADER */}
+        {/* ========================= */}
 
-      {/* 🔷 DASHBOARD */}
-      <ScrollView contentContainerStyle={styles.container}>
-        <ThemedText style={styles.pageTitle}>📊 Product Dashboard</ThemedText>
+        <View style={styles.headerContainer}>
+          <ThemedText style={styles.pageTitle}>📊 Trending</ThemedText>
+        </View>
+
+        {/* ========================= */}
+        {/* PRODUCT GRID - 2 per row */}
+        {/* ========================= */}
 
         <View style={styles.grid}>
-          {categories.map((item) => {
-            const total = item.sold + item.pending;
-            const progress = (item.sold / total) * 100;
+          {products.map((item, index) => (
+            <View key={index} style={styles.card}>
+              {/* PRODUCT IMAGE */}
+              <Image source={{ uri: item.image }} style={styles.productImage} />
 
-            return (
-              <View key={item.name} style={styles.card}>
-                {/* HEADER */}
-                <View style={styles.header}>
-                  <Ionicons name="cube" size={20} color="#1976d2" />
-                  <ThemedText style={styles.title}>{item.name}</ThemedText>
-                </View>
+              {/* PRODUCT NAME */}
+              <ThemedText style={styles.productName}>{item.name}</ThemedText>
 
-                {/* INCOME */}
-                <ThemedText style={styles.income}>{item.income}</ThemedText>
-                <ThemedText style={styles.subLabel}>This Month</ThemedText>
+              {/* CATEGORY */}
+              <ThemedText style={styles.category}>{item.category}</ThemedText>
 
-                {/* DIVIDER */}
-                <View style={styles.divider} />
+              {/* DIVIDER */}
+              <View style={styles.divider} />
 
-                {/* STATS */}
-                <View style={styles.row}>
-                  <ThemedText>✔ Sold</ThemedText>
-                  <ThemedText>{item.sold}</ThemedText>
-                </View>
-
-                <View style={styles.row}>
-                  <ThemedText>📦 Pending</ThemedText>
-                  <ThemedText>{item.pending}</ThemedText>
-                </View>
-
-                <View style={styles.row}>
-                  <ThemedText>⭐ Rating</ThemedText>
-                  <ThemedText>{item.rating}</ThemedText>
-                </View>
-
-                {/* PROGRESS BAR */}
-                <View style={styles.progressBg}>
-                  <View
-                    style={[styles.progressFill, { width: `${progress}%` }]}
-                  />
-                </View>
+              {/* SOLD */}
+              <View style={styles.row}>
+                <ThemedText style={styles.label}>Total Sold</ThemedText>
+                <ThemedText style={styles.sold}>{item.sold}</ThemedText>
               </View>
-            );
-          })}
+
+              {/* PROGRESS */}
+              <View style={styles.progressBg}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    {
+                      width: `${Math.min(item.sold / 6, 100)}%`,
+                    },
+                  ]}
+                />
+              </View>
+            </View>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -114,238 +394,123 @@ export default function HomeScreen() {
 }
 
 //
-// 🔷 ICON COMPONENT
+// 🔥 STYLES - SMALLER & COMPACT
 //
-function TopIcon({ name, onPress }: any) {
-  return (
-    <Ionicons
-      name={name}
-      size={22}
-      color="#0b3c49"
-      onPress={onPress}
-      style={{ marginHorizontal: 10 }}
-    />
-  );
-}
 
-//
-// 🔷 STYLES (MUI-LIKE)
-//
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#f4f6f8",
+  },
+
   container: {
-    padding: 16,
+    padding: 12,
   },
 
-  topBar: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    elevation: 3,
-  },
-
-  pageTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
+  //
+  // HEADER
+  //
+  headerContainer: {
     marginBottom: 12,
   },
 
+  pageTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#111",
+  },
+
+  //
+  // GRID - 2 per row
+  //
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
 
+  //
+  // CARD - smaller
+  //
   card: {
-    width: "48%",
+    width: "48.5%",
     backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 16,
-    marginBottom: 14,
-    elevation: 4,
+    borderRadius: 14,
+    padding: 12,
+    marginBottom: 12,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
 
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
+  //
+  // PRODUCT IMAGE
+  //
+  productImage: {
+    width: "100%",
+    height: 120,
+    borderRadius: 10,
     marginBottom: 8,
+    backgroundColor: "#f0f0f0",
   },
 
-  title: {
-    fontSize: 15,
-    fontWeight: "600",
+  //
+  // PRODUCT
+  //
+  productName: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#111",
   },
 
-  income: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#2e7d32",
-  },
-
-  subLabel: {
-    fontSize: 12,
-    color: "#888",
-    marginBottom: 6,
+  category: {
+    marginTop: 2,
+    color: "#777",
+    fontSize: 11,
   },
 
   divider: {
     height: 1,
-    backgroundColor: "#eee",
-    marginVertical: 6,
+    backgroundColor: "#eeeeee",
+    marginVertical: 8,
   },
 
+  //
+  // ROW
+  //
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 2,
+    alignItems: "center",
   },
 
+  label: {
+    color: "#666",
+    fontSize: 11,
+  },
+
+  sold: {
+    color: "#1976d2",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+
+  //
+  // PROGRESS - smaller
+  //
   progressBg: {
-    height: 6,
-    backgroundColor: "#eee",
+    height: 5,
+    backgroundColor: "#eeeeee",
     borderRadius: 10,
     marginTop: 8,
+    overflow: "hidden",
   },
 
   progressFill: {
-    height: 6,
+    height: 5,
     backgroundColor: "#1976d2",
     borderRadius: 10,
   },
 });
-
-// import { Ionicons } from "@expo/vector-icons";
-// import { useRouter } from "expo-router";
-// import { ScrollView, StyleSheet, View } from "react-native";
-
-// import { ThemedText } from "@/components/themed-text";
-// import { ThemedView } from "@/components/themed-view";
-
-// export default function HomeScreen() {
-//   const router = useRouter();
-
-//   return (
-//     <View style={{ flex: 1 }}>
-//       {/* 🔷 TOP ICON BAR (fixed) */}
-//       <View style={styles.topBar}>
-//         <TopIcon name="briefcase" onPress={() => router.push("/career")} />
-//         <TopIcon
-//           name="information-circle"
-//           onPress={() => router.push("/about")}
-//         />
-//         <TopIcon name="person" onPress={() => router.push("/profile")} />
-//         <TopIcon name="log-in" onPress={() => router.push("/login")} />
-//         <TopIcon name="log-out" onPress={() => router.push("/logout")} />
-//       </View>
-
-//       {/* 🔷 CONTENT */}
-//       <ScrollView contentContainerStyle={{ padding: 16 }}>
-//         {/* TITLE */}
-//         <ThemedView style={styles.section}>
-//           <ThemedText type="title">🏪 Products Marketplace</ThemedText>
-//           <ThemedText>
-//             Trusted platform for quality products across multiple industries.
-//           </ThemedText>
-//         </ThemedView>
-
-//         {/* QUALITY */}
-//         <ThemedView style={styles.section}>
-//           <ThemedText type="subtitle">⭐ Product Quality</ThemedText>
-//           <ThemedText>
-//             All products are verified with strict quality checks and vendor
-//             validation.
-//           </ThemedText>
-//         </ThemedView>
-
-//         {/* WARRANTY */}
-//         <ThemedView style={styles.section}>
-//           <ThemedText type="subtitle">🛡 Warranty Assurance</ThemedText>
-//           <ThemedText>
-//             Secure transactions and warranty support for all purchases.
-//           </ThemedText>
-//         </ThemedView>
-
-//         {/* ACHIEVEMENTS */}
-//         <ThemedView style={styles.section}>
-//           <ThemedText type="subtitle">📈 Achievements</ThemedText>
-//           <ThemedText>✔ 10,000+ Products Listed</ThemedText>
-//           <ThemedText>✔ 5,000+ Happy Customers</ThemedText>
-//           <ThemedText>✔ Trusted Vendors Across India</ThemedText>
-//         </ThemedView>
-
-//         {/* CATEGORIES */}
-//         <ThemedView style={styles.section}>
-//           <ThemedText type="subtitle">🧭 Categories</ThemedText>
-
-//           <View style={styles.grid}>
-//             {[
-//               "Electronics",
-//               "Civil",
-//               "Vehicles",
-//               "Agriculture",
-//               "Real Estate",
-//               "Apps Store",
-//               "Home Products",
-//               "Super Market",
-//               "Clothings",
-//             ].map((item) => (
-//               <View key={item} style={styles.card}>
-//                 <ThemedText>{item}</ThemedText>
-//               </View>
-//             ))}
-//           </View>
-//         </ThemedView>
-//       </ScrollView>
-//     </View>
-//   );
-// }
-
-// //
-// // 🔹 ICON COMPONENT
-// //
-// function TopIcon({ name, onPress }: any) {
-//   return (
-//     <Ionicons
-//       name={name}
-//       size={22}
-//       color="#0b3c49"
-//       onPress={onPress}
-//       style={{ marginHorizontal: 10 }}
-//     />
-//   );
-// }
-
-// //
-// // 🔹 STYLES
-// //
-// const styles = StyleSheet.create({
-//   topBar: {
-//     flexDirection: "row",
-//     justifyContent: "flex-end",
-//     alignItems: "center",
-//     backgroundColor: "#A1CEDC",
-//     paddingVertical: 12,
-//     paddingHorizontal: 12,
-//   },
-
-//   section: {
-//     marginBottom: 20,
-//     gap: 6,
-//   },
-
-//   grid: {
-//     flexDirection: "row",
-//     flexWrap: "wrap",
-//     gap: 10,
-//   },
-
-//   card: {
-//     backgroundColor: "#eef6f9",
-//     padding: 12,
-//     borderRadius: 10,
-//     minWidth: 120,
-//   },
-// });

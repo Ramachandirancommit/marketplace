@@ -1,6 +1,9 @@
 import { Slot, Tabs, usePathname, useRouter } from "expo-router";
+
 import React from "react";
+
 import {
+  Image,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -8,166 +11,432 @@ import {
   View,
 } from "react-native";
 
+import { AntDesign, Feather } from "@expo/vector-icons";
+
 export default function Layout() {
   const { width } = useWindowDimensions();
+
   const isDesktop = width >= 768;
 
   if (isDesktop) {
-    return <SidebarLayout />;
+    return <DesktopMarketplaceLayout />;
   }
 
   return <MobileTabs />;
 }
 
 //
-// 📱 MOBILE → Bottom Tabs (keep minimal)
+// 📱 MOBILE TABS
 //
 function MobileTabs() {
+  const router = useRouter();
+
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="explore" options={{ title: "Explore" }} />
+    <Tabs
+      screenOptions={{
+        headerShown: true,
+
+        //
+        // ✅ HEADER STYLE
+        //
+        headerStyle: {
+          backgroundColor: "#ffffff",
+        },
+
+        headerShadowVisible: false,
+
+        //
+        // ✅ VINATRIX LOGO
+        //
+        headerTitle: () => (
+          <Image
+            source={require("../../assets/images/vinatrixlogo.png")}
+            style={{
+              width: 320,
+              height: 155,
+
+              // ✅ LEFT ALIGN
+              marginLeft: -100,
+
+              resizeMode: "contain",
+            }}
+          />
+        ),
+
+        //
+        // ✅ TITLE ALIGN
+        //
+        headerTitleAlign: "left",
+
+        //
+        // ✅ RIGHT ACTIONS
+        //
+        headerRight: () => (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+
+              marginRight: 10,
+            }}
+          >
+            {/* 🔥 SELL BUTTON */}
+            <TouchableOpacity
+              onPress={() => router.push("/seller")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+
+                backgroundColor: "#ffebee",
+
+                paddingHorizontal: 12,
+                paddingVertical: 8,
+
+                borderRadius: 12,
+
+                marginRight: 10,
+              }}
+            >
+              <Feather name="shopping-bag" size={16} color="#e53935" />
+
+              <Text
+                style={{
+                  marginLeft: 6,
+
+                  color: "#e53935",
+
+                  fontWeight: "700",
+
+                  fontSize: 12,
+                }}
+              >
+                Sell
+              </Text>
+            </TouchableOpacity>
+
+            {/* 👤 PROFILE */}
+            <TouchableOpacity
+              onPress={() => router.push("/profile")}
+              style={{
+                width: 38,
+                height: 38,
+
+                borderRadius: 10,
+
+                backgroundColor: "#f3f4f6",
+
+                justifyContent: "center",
+                alignItems: "center",
+
+                marginRight: 8,
+              }}
+            >
+              <Feather name="user" size={18} color="#333" />
+            </TouchableOpacity>
+
+            {/* 🔑 LOGIN */}
+            <TouchableOpacity
+              onPress={() => router.push("/auth")}
+              style={{
+                width: 38,
+                height: 38,
+
+                borderRadius: 10,
+
+                backgroundColor: "#e3f2fd",
+
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <AntDesign name="login" size={18} color="#1976d2" />
+            </TouchableOpacity>
+          </View>
+        ),
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+        }}
+      />
+
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: "Explore",
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+        }}
+      />
     </Tabs>
   );
 }
 
 //
-// 💻 WEB → Sidebar Layout
+// 💻 DESKTOP MARKETPLACE
 //
-function SidebarLayout() {
+function DesktopMarketplaceLayout() {
   const router = useRouter();
-  const pathname = usePathname(); // 🔥 current route
+
+  const pathname = usePathname();
 
   return (
-    <View style={{ flex: 1, flexDirection: "row" }}>
-      {/* Sidebar */}
+    <View style={{ flex: 1 }}>
+      {/* ========================= */}
+      {/* TOP NAVBAR */}
+      {/* ========================= */}
+
       <View
         style={{
-          width: 240,
+          height: 75,
+
+          borderBottomWidth: 1,
+          borderBottomColor: "#eeeeee",
+
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+
+          paddingHorizontal: 20,
+
           backgroundColor: "#ffffff",
-          paddingTop: 30,
-          paddingHorizontal: 12,
         }}
       >
-        {/* Logo / Title */}
-        <Text
+        {/* ========================= */}
+        {/* LEFT → LOGO */}
+        {/* ========================= */}
+
+        <View
           style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            marginBottom: 20,
-            color: "#0b3c49",
+            flexDirection: "row",
+            alignItems: "center",
+
+            marginLeft: -10,
           }}
         >
-          🏪 Products Marketplace
-        </Text>
+          <Image
+            source={require("../../assets/images/vinatrixlogo.png")}
+            style={{
+              width: 260,
+              height: 270,
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <SidebarItem
-            title="Dashboards"
-            active={pathname === "/"}
-            onPress={() => router.push("/")}
+              resizeMode: "contain",
+            }}
           />
+        </View>
 
-          <SidebarItem
-            title="Top Sellers"
-            active={pathname === "/explore"}
-            onPress={() => router.push("/explore")}
-          />
+        {/* ========================= */}
+        {/* RIGHT ACTIONS */}
+        {/* ========================= */}
 
-          <SidebarItem
-            title="Electronics"
-            active={pathname === "/electronics"}
-            onPress={() => router.push("/electronics")}
-          />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          {/* 🔥 SELL BUTTON */}
+          <TouchableOpacity
+            onPress={() => router.push("/seller")}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
 
-          <SidebarItem
-            title="Civil"
-            active={pathname === "/civil"}
-            onPress={() => router.push("/civil")}
-          />
+              backgroundColor: "#ffebee",
 
-          <SidebarItem
-            title="Vehicles"
-            active={pathname === "/vehicles"}
-            onPress={() => router.push("/vehicles")}
-          />
+              paddingHorizontal: 16,
+              paddingVertical: 10,
 
-          <SidebarItem
-            title="Agriculture"
-            active={pathname === "/agriculture"}
-            onPress={() => router.push("/agriculture")}
-          />
+              borderRadius: 12,
 
-          <SidebarItem
-            title="Real Estate"
-            active={pathname === "/realestate"}
-            onPress={() => router.push("/realestate")}
-          />
+              marginRight: 14,
+            }}
+          >
+            <Feather name="shopping-bag" size={18} color="#e53935" />
 
-          <SidebarItem
-            title="Apps Store"
-            active={pathname === "/apps"}
-            onPress={() => router.push("/apps")}
-          />
+            <Text
+              style={{
+                marginLeft: 8,
 
-          <SidebarItem
-            title="Home Products"
-            active={pathname === "/home-products"}
-            onPress={() => router.push("/home-products")}
-          />
+                color: "#e53935",
 
-          <SidebarItem
-            title="Super Market"
-            active={pathname === "/super-market"}
-            onPress={() => router.push("/super-market")}
-          />
+                fontWeight: "700",
 
-          <SidebarItem
-            title="Clothings"
-            active={pathname === "/clothings"}
-            onPress={() => router.push("/clothings")}
-          />
-        </ScrollView>
+                fontSize: 14,
+              }}
+            >
+              Sell Products
+            </Text>
+          </TouchableOpacity>
+
+          {/* 👤 PROFILE */}
+          <TouchableOpacity
+            onPress={() => router.push("/profile")}
+            style={{
+              width: 42,
+              height: 42,
+
+              borderRadius: 12,
+
+              backgroundColor: "#f3f4f6",
+
+              justifyContent: "center",
+              alignItems: "center",
+
+              marginRight: 10,
+            }}
+          >
+            <Feather name="user" size={20} color="#333" />
+          </TouchableOpacity>
+
+          {/* 🔑 LOGIN */}
+          <TouchableOpacity
+            onPress={() => router.push("/auth")}
+            style={{
+              width: 42,
+              height: 42,
+
+              borderRadius: 12,
+
+              backgroundColor: "#e3f2fd",
+
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="login" size={20} color="#1976d2" />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* Page Content */}
-      <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-        <Slot />
+      {/* ========================= */}
+      {/* MAIN CONTENT */}
+      {/* ========================= */}
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+        }}
+      >
+        {/* ========================= */}
+        {/* SIDEBAR */}
+        {/* ========================= */}
+
+        <View
+          style={{
+            width: 240,
+
+            backgroundColor: "#ffffff",
+
+            borderRightWidth: 1,
+            borderRightColor: "#eeeeee",
+
+            paddingTop: 20,
+            paddingHorizontal: 12,
+          }}
+        >
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <SidebarItem
+              title="Top Sellers"
+              active={pathname === "/"}
+              onPress={() => router.push("/")}
+            />
+
+            <SidebarItem
+              title="All Products"
+              active={pathname === "/allproducts"}
+              onPress={() => router.push("/allproducts")}
+            />
+
+            <SidebarItem
+              title="Agriculture"
+              active={pathname === "/agriculture"}
+              onPress={() => router.push("/agriculture")}
+            />
+
+            <SidebarItem
+              title="Vehicles"
+              active={pathname === "/vehicles"}
+              onPress={() => router.push("/vehicles")}
+            />
+
+            <SidebarItem
+              title="Real Estate"
+              active={pathname === "/realestate"}
+              onPress={() => router.push("/realestate")}
+            />
+
+            <SidebarItem
+              title="Clothings"
+              active={pathname === "/clothings"}
+              onPress={() => router.push("/clothings")}
+            />
+
+            <SidebarItem
+              title="Super Market"
+              active={pathname === "/super-market"}
+              onPress={() => router.push("/super-market")}
+            />
+          </ScrollView>
+        </View>
+
+        {/* ========================= */}
+        {/* PAGE CONTENT */}
+        {/* ========================= */}
+
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#f9fafb",
+          }}
+        >
+          <Slot />
+        </View>
       </View>
     </View>
   );
 }
 
 //
-// 🔹 Sidebar Item (with ACTIVE highlight)
+// 🔹 SIDEBAR ITEM
 //
+
 type SidebarItemProps = {
   title: string;
-  onPress: () => void;
   active: boolean;
+  onPress: () => void;
 };
 
-function SidebarItem({ title, onPress, active }: SidebarItemProps) {
+function SidebarItem({ title, active, onPress }: SidebarItemProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         paddingVertical: 12,
-        paddingHorizontal: 10,
-        borderRadius: 8,
-        marginBottom: 6,
+        paddingHorizontal: 12,
 
-        // 🔥 ACTIVE STYLE
+        borderRadius: 10,
+
+        marginBottom: 8,
+
         backgroundColor: active ? "#e3f2fd" : "transparent",
-        borderLeftWidth: active ? 4 : 0,
-        borderLeftColor: "#1976d2",
       }}
     >
       <Text
         style={{
-          color: active ? "#1976d2" : "#0b3c49",
-          fontSize: 15,
+          color: active ? "#1976d2" : "#333333",
+
           fontWeight: active ? "700" : "500",
+
+          fontSize: 15,
         }}
       >
         {title}
@@ -175,147 +444,3 @@ function SidebarItem({ title, onPress, active }: SidebarItemProps) {
     </TouchableOpacity>
   );
 }
-// import { Slot, Tabs, useRouter } from "expo-router";
-// import React from "react";
-// import {
-//   ScrollView,
-//   Text,
-//   TouchableOpacity,
-//   useWindowDimensions,
-//   View,
-// } from "react-native";
-
-// export default function Layout() {
-//   const { width } = useWindowDimensions();
-//   const isDesktop = width >= 768;
-
-//   if (isDesktop) {
-//     return <SidebarLayout />;
-//   }
-
-//   return <MobileTabs />;
-// }
-
-// //
-// // 📱 MOBILE → Bottom Tabs (keep minimal)
-// //
-// function MobileTabs() {
-//   return (
-//     <Tabs screenOptions={{ headerShown: false }}>
-//       <Tabs.Screen name="index" options={{ title: "Home" }} />
-//       <Tabs.Screen name="explore" options={{ title: "Explore" }} />
-//     </Tabs>
-//   );
-// }
-
-// //
-// // 💻 WEB → Sidebar Layout
-// //
-// function SidebarLayout() {
-//   const router = useRouter();
-
-//   return (
-//     <View style={{ flex: 1, flexDirection: "row" }}>
-//       {/* Sidebar */}
-//       <View
-//         style={{
-//           width: 240,
-//           backgroundColor: "rgb(255, 255, 255)", // ✅ light sky blue
-//           paddingTop: 30,
-//           paddingHorizontal: 12,
-//         }}
-//       >
-//         {/* Logo / Title */}
-//         <Text
-//           style={{
-//             fontSize: 18,
-//             fontWeight: "bold",
-//             marginBottom: 20,
-//             color: "#0b3c49",
-//           }}
-//         >
-//           🏪 Products Marketplace
-//         </Text>
-
-//         <ScrollView showsVerticalScrollIndicator={false}>
-//           <SidebarItem title="Dashboards" onPress={() => router.push("/")} />
-//           <SidebarItem
-//             title="Top Sellers"
-//             onPress={() => router.push("/explore")}
-//           />
-
-//           <SidebarItem
-//             title="Electronics"
-//             onPress={() => router.push("/electronics")}
-//           />
-//           <SidebarItem title="Civil" onPress={() => router.push("/civil")} />
-//           <SidebarItem
-//             title="Vehicles"
-//             onPress={() => router.push("/vehicles")}
-//           />
-//           <SidebarItem
-//             title="Agriculture"
-//             onPress={() => router.push("/agriculture")}
-//           />
-//           <SidebarItem
-//             title="Real Estate"
-//             onPress={() => router.push("/realestate")}
-//           />
-//           <SidebarItem
-//             title="Apps Store"
-//             onPress={() => router.push("/apps")}
-//           />
-//           <SidebarItem
-//             title="Home Products"
-//             onPress={() => router.push("/home-products")}
-//           />
-//           <SidebarItem
-//             title="Super Market"
-//             onPress={() => router.push("/super-market")}
-//           />
-//           <SidebarItem
-//             title="Clothings"
-//             onPress={() => router.push("/clothings")}
-//           />
-//         </ScrollView>
-//       </View>
-
-//       {/* Page Content */}
-//       <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-//         <Slot />
-//       </View>
-//     </View>
-//   );
-// }
-
-// //
-// // 🔹 Sidebar Item (Type Safe)
-// //
-// type SidebarItemProps = {
-//   title: string;
-//   onPress: () => void;
-// };
-
-// function SidebarItem({ title, onPress }: SidebarItemProps) {
-//   return (
-//     <TouchableOpacity
-//       onPress={onPress}
-//       style={{
-//         paddingVertical: 12,
-//         paddingHorizontal: 10,
-//         borderRadius: 8,
-//         marginBottom: 6,
-//       }}
-//     >
-//       <Text
-//         style={{
-//           color: "#0b3c49", // dark text for light bg
-//           fontSize: 15,
-//           fontWeight: "500",
-//         }}
-//       >
-//         {title}
-//       </Text>
-//     </TouchableOpacity>
-//   );
-// }

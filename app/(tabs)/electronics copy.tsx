@@ -2,13 +2,13 @@ import { ThemedText } from "@/components/themed-text";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo, useRef, useState } from "react";
 import {
-    Animated,
-    Image,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Animated,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function ElectronicsScreen() {

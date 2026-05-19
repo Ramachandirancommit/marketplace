@@ -2,13 +2,13 @@ import { ThemedText } from "@/components/themed-text";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function GoatMarketScreen() {
